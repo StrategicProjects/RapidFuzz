@@ -1,0 +1,32 @@
+url: https://monitoramento.sepe.pe.gov.br/rapidfuzz
+template:
+  light-switch: true
+  trailing_slash_redirect: true
+  package: tidytemplate
+  bootstrap: 5
+  bslib:
+
+navbar:
+  structure:
+    right: [search, github]
+  components:
+    github:
+      icon: fa-github
+      href: https://github.com/StrategicProjects/RapidFuzz
+      aria-label: Github
+
+footer:
+  structure:
+    left: [rmd]
+    right: [developed_by]
+  components:
+      #p: "\n\n"
+      rmd: |
+        **RapidFuzz** is part of an ecosystem of R packages for data analysis and
+        computational document processing<br>developed at the [Secretaria Executiva
+        de Monitoramento Estratégico](https://monitoramento.sepe.pe.gov.br).
+      developed_by: |
+        Developed by André Leite and Hugo Medeiros.
+
+development:
+  mode: auto
