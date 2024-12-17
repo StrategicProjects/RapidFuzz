@@ -461,6 +461,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// jaro_winkler_normalized_similarity
+double jaro_winkler_normalized_similarity(std::string s1, std::string s2, double prefix_weight);
+RcppExport SEXP _RapidFuzz_jaro_winkler_normalized_similarity(SEXP s1SEXP, SEXP s2SEXP, SEXP prefix_weightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type s1(s1SEXP);
+    Rcpp::traits::input_parameter< std::string >::type s2(s2SEXP);
+    Rcpp::traits::input_parameter< double >::type prefix_weight(prefix_weightSEXP);
+    rcpp_result_gen = Rcpp::wrap(jaro_winkler_normalized_similarity(s1, s2, prefix_weight));
+    return rcpp_result_gen;
+END_RCPP
+}
 // lcs_seq_distance
 size_t lcs_seq_distance(std::string s1, std::string s2, Rcpp::Nullable<double> score_cutoff);
 RcppExport SEXP _RapidFuzz_lcs_seq_distance(SEXP s1SEXP, SEXP s2SEXP, SEXP score_cutoffSEXP) {
@@ -778,6 +791,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RapidFuzz_jaro_winkler_distance", (DL_FUNC) &_RapidFuzz_jaro_winkler_distance, 3},
     {"_RapidFuzz_jaro_winkler_similarity", (DL_FUNC) &_RapidFuzz_jaro_winkler_similarity, 3},
     {"_RapidFuzz_jaro_winkler_normalized_distance", (DL_FUNC) &_RapidFuzz_jaro_winkler_normalized_distance, 3},
+    {"_RapidFuzz_jaro_winkler_normalized_similarity", (DL_FUNC) &_RapidFuzz_jaro_winkler_normalized_similarity, 3},
     {"_RapidFuzz_lcs_seq_distance", (DL_FUNC) &_RapidFuzz_lcs_seq_distance, 3},
     {"_RapidFuzz_lcs_seq_similarity", (DL_FUNC) &_RapidFuzz_lcs_seq_similarity, 3},
     {"_RapidFuzz_lcs_seq_normalized_distance", (DL_FUNC) &_RapidFuzz_lcs_seq_normalized_distance, 3},

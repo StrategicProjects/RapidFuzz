@@ -69,6 +69,10 @@ using namespace Rcpp;
        source_positions.push_back(op.src_pos);
        destination_positions.push_back(op.dest_pos);
        break;
+     case rapidfuzz::EditType::None:
+       break;
+     default:
+       throw std::invalid_argument("Unknown EditType value");
      }
    }
 

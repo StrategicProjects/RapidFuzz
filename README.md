@@ -1,10 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# RapidFuzz <a href="https://monitoramento.sepe.pe.gov.br/rapidfuzz/"><img src="man/figures/logo.png" align="right" width="120" alt="RapidFuzz website" /></a>
+# RapidFuzz <a href="https://github.com/StrategicProjects/RapidFuzz"><img src="man/figures/logo.png" align="right" width="120" alt="RapidFuzz website" /></a>
 
 <!-- badges: start -->
 
+![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/RapidFuzz)  
+![CRAN
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RapidFuzz)  
 ![](https://img.shields.io/badge/devel%20version-1.0-blue.svg)
 <!-- badges: end -->
 
@@ -45,7 +48,7 @@ transform one string into another.
 RapidFuzz leverages advanced algorithms to ensure high performance while
 maintaining accuracy. The original library is open-source and can be
 accessed on [RapidFuzz GitHub
-Repository](https://github.com/maxbachmann/RapidFuzz).
+Repository](https://github.com/rapidfuzz/RapidFuzz).
 
 ------------------------------------------------------------------------
 

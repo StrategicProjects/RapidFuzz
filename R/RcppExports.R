@@ -466,18 +466,6 @@ jaro_normalized_similarity <- function(s1, s2) {
     .Call(`_RapidFuzz_jaro_normalized_similarity`, s1, s2)
 }
 
-#' @name jaro_winkler_normalized_similarity
-#' @title Normalized Jaro-Winkler Similarity
-#' @description Calculates the normalized Jaro-Winkler similarity between two strings.
-#' @param s1 The first string.
-#' @param s2 The second string.
-#' @param prefix_weight The weight applied to the prefix (default: 0.1).
-#' @return A numeric value representing the normalized Jaro-Winkler similarity.
-#' @examples
-#' jaro_winkler_normalized_similarity("kitten", "sitting")
-#' @export
-NULL
-
 #' @name jaro_winkler_distance
 #' @title Jaro-Winkler Distance
 #' @description Calculates the Jaro-Winkler distance between two strings.
@@ -518,6 +506,20 @@ jaro_winkler_similarity <- function(s1, s2, prefix_weight = 0.1) {
 #' @export
 jaro_winkler_normalized_distance <- function(s1, s2, prefix_weight = 0.1) {
     .Call(`_RapidFuzz_jaro_winkler_normalized_distance`, s1, s2, prefix_weight)
+}
+
+#' @name jaro_winkler_normalized_similarity
+#' @title Similaridade Normalizada Jaro-Winkler
+#' @description Calcula a similaridade normalizada Jaro-Winkler entre duas strings.
+#' @param s1 Primeira string.
+#' @param s2 Segunda string.
+#' @param prefix_weight Peso do prefixo (valor padrão: 0.1).
+#' @return Um valor numérico representando a similaridade normalizada Jaro-Winkler.
+#' @examples
+#' jaro_winkler_normalized_similarity("kitten", "sitting")
+#' @export
+jaro_winkler_normalized_similarity <- function(s1, s2, prefix_weight = 0.1) {
+    .Call(`_RapidFuzz_jaro_winkler_normalized_similarity`, s1, s2, prefix_weight)
 }
 
 #' @name lcs_seq_distance
@@ -727,18 +729,63 @@ osa_normalized_distance <- function(s1, s2, score_cutoff = 1.0) {
     .Call(`_RapidFuzz_osa_normalized_distance`, s1, s2, score_cutoff)
 }
 
+#'
+#' @title Postfix Distance
+#' @description Calculates the distance between the postfixes of two strings.
+#'
+#' @param s1 A string to compare.
+#' @param s2 Another string to compare.
+#' @param score_cutoff A threshold for the distance score (default is the maximum possible size_t value).
+#'
+#' @return An integer representing the postfix distance.
+#'
+#' @examples
+#' postfix_distance("string1", "string2")
 postfix_distance <- function(s1, s2, score_cutoff = NULL) {
     .Call(`_RapidFuzz_postfix_distance`, s1, s2, score_cutoff)
 }
 
+#' @title Postfix Similarity
+#' @description Calculates the similarity between the postfixes of two strings.
+#'
+#' @param s1 A string to compare.
+#' @param s2 Another string to compare.
+#' @param score_cutoff A threshold for the similarity score (default is 0).
+#'
+#' @return An integer representing the postfix similarity.
+#'
+#' @examples
+#' postfix_similarity("string1", "string2")
 postfix_similarity <- function(s1, s2, score_cutoff = 0L) {
     .Call(`_RapidFuzz_postfix_similarity`, s1, s2, score_cutoff)
 }
 
+#' @title Normalized Postfix Distance
+#' @description Calculates the normalized distance between the postfixes of two strings.
+#'
+#' @param s1 A string to compare.
+#' @param s2 Another string to compare.
+#' @param score_cutoff A threshold for the normalized distance score (default is 1.0).
+#'
+#' @return A double representing the normalized postfix distance.
+#'
+#' @examples
+#' postfix_normalized_distance("string1", "string2")
 postfix_normalized_distance <- function(s1, s2, score_cutoff = 1.0) {
     .Call(`_RapidFuzz_postfix_normalized_distance`, s1, s2, score_cutoff)
 }
 
+#' @title Normalized Postfix Similarity
+#' @description Calculates the normalized similarity between the postfixes of two strings.
+#'
+#' @param s1 A string to compare.
+#' @param s2 Another string to compare.
+#' @param score_cutoff A threshold for the normalized similarity score (default is 0.0).
+#'
+#' @return A double representing the normalized postfix similarity.
+#'
+#' @examples
+#' postfix_normalized_similarity("string1", "string2")
 postfix_normalized_similarity <- function(s1, s2, score_cutoff = 0.0) {
     .Call(`_RapidFuzz_postfix_normalized_similarity`, s1, s2, score_cutoff)
 }

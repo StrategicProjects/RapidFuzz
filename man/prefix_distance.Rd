@@ -4,7 +4,7 @@
 \alias{prefix_distance}
 \title{Calculate the prefix distance between two strings}
 \usage{
-prefix_distance(s1, s2, score_cutoff)
+prefix_distance(s1, s2, score_cutoff = NULL)
 }
 \arguments{
 \item{s1}{A string. The first input string.}

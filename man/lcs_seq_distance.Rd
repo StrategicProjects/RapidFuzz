@@ -4,7 +4,7 @@
 \alias{lcs_seq_distance}
 \title{LCSseq Distance}
 \usage{
-lcs_seq_distance(s1, s2, score_cutoff)
+lcs_seq_distance(s1, s2, score_cutoff = NULL)
 }
 \arguments{
 \item{s1}{The first string.}

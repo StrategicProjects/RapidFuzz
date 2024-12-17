@@ -1,6 +1,7 @@
 url: https://monitoramento.sepe.pe.gov.br/rapidfuzz
 template:
-  light-switch: true
+  light-switch: false
+  dark-mode: false
   trailing_slash_redirect: true
   package: tidytemplate
   bootstrap: 5

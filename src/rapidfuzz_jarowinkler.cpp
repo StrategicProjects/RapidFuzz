@@ -53,13 +53,16 @@ using namespace Rcpp;
  }
 
 //' @name jaro_winkler_normalized_similarity
-//' @title Normalized Jaro-Winkler Similarity
-//' @description Calculates the normalized Jaro-Winkler similarity between two strings.
-//' @param s1 The first string.
-//' @param s2 The second string.
-//' @param prefix_weight The weight applied to the prefix (default: 0.1).
-//' @return A numeric value representing the normalized Jaro-Winkler similarity.
+//' @title Similaridade Normalizada Jaro-Winkler
+//' @description Calcula a similaridade normalizada Jaro-Winkler entre duas strings.
+//' @param s1 Primeira string.
+//' @param s2 Segunda string.
+//' @param prefix_weight Peso do prefixo (valor padrão: 0.1).
+//' @return Um valor numérico representando a similaridade normalizada Jaro-Winkler.
 //' @examples
 //' jaro_winkler_normalized_similarity("kitten", "sitting")
 //' @export
-// [[Rcpp::
+// [[Rcpp::export]]
+ double jaro_winkler_normalized_similarity(std::string s1, std::string s2, double prefix_weight = 0.1) {
+   return rapidfuzz::jaro_winkler_normalized_similarity(s1, s2, prefix_weight);
+ }

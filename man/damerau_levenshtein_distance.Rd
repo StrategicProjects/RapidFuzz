@@ -4,7 +4,7 @@
 \alias{damerau_levenshtein_distance}
 \title{Damerau-Levenshtein Distance}
 \usage{
-damerau_levenshtein_distance(s1, s2, score_cutoff)
+damerau_levenshtein_distance(s1, s2, score_cutoff = NULL)
 }
 \arguments{
 \item{s1}{A string. The first input string.}
