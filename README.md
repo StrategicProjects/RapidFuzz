@@ -8,7 +8,8 @@
 ![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/RapidFuzz)  
 ![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RapidFuzz)  
-![](https://img.shields.io/badge/devel%20version-1.1.0-blue.svg)
+![Devel
+Badge](https://img.shields.io/badge/devel%20version-1.1.0-blue.svg)
 <!-- badges: end -->
 
 Provides a high-performance interface for calculating string
