@@ -12,7 +12,7 @@ Authors@R: c(
             person("Max", "Bachmann", role = ("ctb")),
             person("Adam", "Cohen", role = c("ctb")))
 Description: Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient library 'RapidFuzz' <https://github.com/rapidfuzz/rapidfuzz-cpp>. This package integrates the 'C++' implementation, allowing 'R' users to access cutting-edge algorithms for fuzzy matching and text analysis. Supported metrics include Levenshtein, Damerau-Levenshtein, Hamming, Jaro, Jaro-Winkler, Longest Common Subsequence (LCS), Optimal String Alignment (OSA), Indel, Prefix, and Postfix distances and similarities, as well as multiple fuzzy matching ratios.
-URL: <https://github.com/StrategicProjects/RapidFuzz>
+URL: <https://github.com/StrategicProjects/RapidFuzz>, <https://strategicprojects.github.io/RapidFuzz/>
 Note:
     This package makes use of the 'RapidFuzz' source code (v3.3.3) created by Max Bachmann and Adam Cohen (<https://github.com/rapidfuzz/rapidfuzz-cpp>). 
 License: MIT + file LICENSE
