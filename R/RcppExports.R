@@ -306,6 +306,50 @@ fuzz_QRatio <- function(s1, s2, score_cutoff = 0.0) {
     .Call(`_RapidFuzz_fuzz_QRatio`, s1, s2, score_cutoff)
 }
 
+#' @name fuzz_partial_token_sort_ratio
+#' @title Partial Token Sort Ratio Calculation
+#' @description Sorts the words in the strings and calculates the partial ratio between them.
+#' This combines the advantages of token_sort_ratio and partial_ratio.
+#' @param s1 First string.
+#' @param s2 Second string.
+#' @param score_cutoff Optional score cutoff threshold (default: 0.0).
+#' @return A double representing the partial token sort ratio between the two strings.
+#' @examples
+#' fuzz_partial_token_sort_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
+#' @export
+fuzz_partial_token_sort_ratio <- function(s1, s2, score_cutoff = 0.0) {
+    .Call(`_RapidFuzz_fuzz_partial_token_sort_ratio`, s1, s2, score_cutoff)
+}
+
+#' @name fuzz_partial_token_set_ratio
+#' @title Partial Token Set Ratio Calculation
+#' @description Compares the unique and common words in the strings and calculates the partial ratio.
+#' This combines the advantages of token_set_ratio and partial_ratio.
+#' @param s1 First string.
+#' @param s2 Second string.
+#' @param score_cutoff Optional score cutoff threshold (default: 0.0).
+#' @return A double representing the partial token set ratio between the two strings.
+#' @examples
+#' fuzz_partial_token_set_ratio("fuzzy wuzzy was a bear", "fuzzy fuzzy was a bear")
+#' @export
+fuzz_partial_token_set_ratio <- function(s1, s2, score_cutoff = 0.0) {
+    .Call(`_RapidFuzz_fuzz_partial_token_set_ratio`, s1, s2, score_cutoff)
+}
+
+#' @name fuzz_partial_token_ratio
+#' @title Combined Partial Token Ratio
+#' @description Calculates the maximum ratio of partial_token_set_ratio and partial_token_sort_ratio.
+#' @param s1 First string.
+#' @param s2 Second string.
+#' @param score_cutoff Optional score cutoff threshold (default: 0.0).
+#' @return A double representing the combined partial token ratio between the two strings.
+#' @examples
+#' fuzz_partial_token_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
+#' @export
+fuzz_partial_token_ratio <- function(s1, s2, score_cutoff = 0.0) {
+    .Call(`_RapidFuzz_fuzz_partial_token_ratio`, s1, s2, score_cutoff)
+}
+
 #' @name hamming_distance
 #' @title Hamming Distance
 #' @description Calculates the Hamming distance between two strings.
@@ -729,7 +773,7 @@ osa_normalized_distance <- function(s1, s2, score_cutoff = 1.0) {
     .Call(`_RapidFuzz_osa_normalized_distance`, s1, s2, score_cutoff)
 }
 
-#'
+#' @name postfix_distance
 #' @title Postfix Distance
 #' @description Calculates the distance between the postfixes of two strings.
 #'
@@ -741,10 +785,12 @@ osa_normalized_distance <- function(s1, s2, score_cutoff = 1.0) {
 #'
 #' @examples
 #' postfix_distance("string1", "string2")
+#' @export
 postfix_distance <- function(s1, s2, score_cutoff = NULL) {
     .Call(`_RapidFuzz_postfix_distance`, s1, s2, score_cutoff)
 }
 
+#' @name postfix_similarity
 #' @title Postfix Similarity
 #' @description Calculates the similarity between the postfixes of two strings.
 #'
@@ -756,10 +802,12 @@ postfix_distance <- function(s1, s2, score_cutoff = NULL) {
 #'
 #' @examples
 #' postfix_similarity("string1", "string2")
+#' @export
 postfix_similarity <- function(s1, s2, score_cutoff = 0L) {
     .Call(`_RapidFuzz_postfix_similarity`, s1, s2, score_cutoff)
 }
 
+#' @name postfix_normalized_distance
 #' @title Normalized Postfix Distance
 #' @description Calculates the normalized distance between the postfixes of two strings.
 #'
@@ -771,10 +819,12 @@ postfix_similarity <- function(s1, s2, score_cutoff = 0L) {
 #'
 #' @examples
 #' postfix_normalized_distance("string1", "string2")
+#' @export
 postfix_normalized_distance <- function(s1, s2, score_cutoff = 1.0) {
     .Call(`_RapidFuzz_postfix_normalized_distance`, s1, s2, score_cutoff)
 }
 
+#' @name postfix_normalized_similarity
 #' @title Normalized Postfix Similarity
 #' @description Calculates the normalized similarity between the postfixes of two strings.
 #'
@@ -786,6 +836,7 @@ postfix_normalized_distance <- function(s1, s2, score_cutoff = 1.0) {
 #'
 #' @examples
 #' postfix_normalized_similarity("string1", "string2")
+#' @export
 postfix_normalized_similarity <- function(s1, s2, score_cutoff = 0.0) {
     .Call(`_RapidFuzz_postfix_normalized_similarity`, s1, s2, score_cutoff)
 }

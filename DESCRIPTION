@@ -1,20 +1,25 @@
 Package: RapidFuzz
 Type: Package
 Title: String Similarity Computation Using 'RapidFuzz'
-Version: 1.0
-Date: 2024-11-30
+Version: 1.1.0
+Date: 2026-04-07
 Authors@R: c(
             person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre")),
             person("Hugo", "Vaconcelos", email = "hugo.vasconcelos@ufpe.br", role = "aut"),
+            person("Marcos", "Wasilew", email = "marcos.wasilew@gmail.com", role = "aut"),
+            person("Carlos", "Amorin", email = "carlos.agaf@ufpe.br", role = "aut"),
+            person("Diogo", "Bezerra", email = "diogo.bezerra@ufpe.br", role = "aut"),
             person("Max", "Bachmann", role = ("ctb")),
             person("Adam", "Cohen", role = c("ctb")))
-Description: Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient library 'RapidFuzz' <https://github.com/rapidfuzz/rapidfuzz-cpp>. This package integrates the 'C++' implementation, allowing 'R' users to access cutting-edge algorithms for fuzzy matching and text analysis.
+Description: Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient library 'RapidFuzz' <https://github.com/rapidfuzz/rapidfuzz-cpp>. This package integrates the 'C++' implementation, allowing 'R' users to access cutting-edge algorithms for fuzzy matching and text analysis. Supported metrics include Levenshtein, Damerau-Levenshtein, Hamming, Jaro, Jaro-Winkler, Longest Common Subsequence (LCS), Optimal String Alignment (OSA), Indel, Prefix, and Postfix distances and similarities, as well as multiple fuzzy matching ratios.
 URL: <https://github.com/StrategicProjects/RapidFuzz>
 Note:
-    This package makes use of the 'RapidFuzz' source code created by Max Bachmann and Adam Cohen (<https://github.com/rapidfuzz/rapidfuzz-cpp>). 
+    This package makes use of the 'RapidFuzz' source code (v3.3.3) created by Max Bachmann and Adam Cohen (<https://github.com/rapidfuzz/rapidfuzz-cpp>). 
 License: MIT + file LICENSE
 Encoding: UTF-8
-Imports: Rcpp (>= 1.0.13)
+Imports: Rcpp (>= 1.0.13), cli
 LinkingTo: Rcpp
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 SystemRequirements: C++17

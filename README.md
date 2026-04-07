@@ -8,20 +8,20 @@
 ![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/RapidFuzz)  
 ![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RapidFuzz)  
-![](https://img.shields.io/badge/devel%20version-1.0-blue.svg)
+![](https://img.shields.io/badge/devel%20version-1.1.0-blue.svg)
 <!-- badges: end -->
 
 Provides a high-performance interface for calculating string
 similarities and distances, leveraging the efficient C++ library
-[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) developed by Max
-Bachmann and Adam Cohen. This package integrates the C++ implementation,
-allowing R users to access cutting-edge algorithms for fuzzy matching
-and text analysis.
+[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.3)
+developed by Max Bachmann and Adam Cohen. This package integrates the
+C++ implementation, allowing R users to access cutting-edge algorithms
+for fuzzy matching and text analysis.
 
 ## Installation
 
-You can install directly from CRAN or the development version of pikchr
-from [GitHub](https://github.com/) with:
+You can install directly from CRAN or the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
@@ -95,6 +95,21 @@ Repository](https://github.com/rapidfuzz/RapidFuzz).
 - `fuzz_token_ratio()`: Calculate Combined Token Ratio.
 - `fuzz_token_set_ratio()`: Perform Token Set Ratio Calculation.
 - `fuzz_token_sort_ratio()`: Perform Token Sort Ratio Calculation.
+- `fuzz_partial_token_sort_ratio()`: Partial Token Sort Ratio (sorts
+  words and uses partial ratio). **New in v1.1.0**
+- `fuzz_partial_token_set_ratio()`: Partial Token Set Ratio (token set +
+  partial ratio). **New in v1.1.0**
+- `fuzz_partial_token_ratio()`: Combined Partial Token Ratio (max of
+  partial token sort/set ratios). **New in v1.1.0**
+
+### Extract Functions
+
+- `extract_similar_strings()`: Find all strings above a similarity
+  threshold.
+- `extract_best_match()`: Find the best matching string from a set of
+  choices.
+- `extract_matches()`: Extract top-N matches using a configurable
+  scorer.
 
 ### Hamming Functions
 
@@ -167,6 +182,17 @@ Repository](https://github.com/rapidfuzz/RapidFuzz).
 - `prefix_similarity()`: Calculate the Prefix Similarity between two
   strings.
 
+### Postfix Functions
+
+- `postfix_distance()`: Calculate the Postfix Distance between two
+  strings.
+- `postfix_normalized_distance()`: Calculate the Normalized Postfix
+  Distance between two strings.
+- `postfix_normalized_similarity()`: Calculate the Normalized Postfix
+  Similarity between two strings.
+- `postfix_similarity()`: Calculate the Postfix Similarity between two
+  strings.
+
 ------------------------------------------------------------------------
 
 ## Example Usage
@@ -195,6 +221,19 @@ damerau_levenshtein_distance("abcdef", "abcfed")
 # Output: 2
 ```
 
+### Partial Token Ratios (New in v1.1.0)
+
+``` r
+fuzz_partial_token_sort_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
+# Output: 100
+
+fuzz_partial_token_set_ratio("fuzzy wuzzy was a bear", "fuzzy fuzzy was a bear")
+# Output: 100
+
+fuzz_partial_token_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
+# Output: 100
+```
+
 ### Extract Matches
 
 ``` r
@@ -202,6 +241,7 @@ damerau_levenshtein_distance("abcdef", "abcfed")
 query <- "new york jets"
 choices <- c("Atlanta Falcons", "New York Jets", "New York Giants", "Dallas Cowboys")
 score_cutoff <- 0.0
+
 # Find the best match
 extract_matches(query, choices, score_cutoff, scorer = "PartialRatio")
 # Output:
@@ -209,6 +249,9 @@ extract_matches(query, choices, score_cutoff, scorer = "PartialRatio")
 # 1   New York Jets 100.00000
 # 2 New York Giants  81.81818
 # 3 Atlanta Falcons  33.33333
+
+# Using new scorers (v1.1.0)
+extract_matches(query, choices, score_cutoff, scorer = "PartialTokenRatio")
 ```
 
 ------------------------------------------------------------------------
@@ -216,9 +259,10 @@ extract_matches(query, choices, score_cutoff, scorer = "PartialRatio")
 ### Original Library
 
 The `RapidFuzz` package is a wrapper of the
-[RapidFuzz](https://github.com/maxbachmann/RapidFuzz) C++ library,
-developed by Max Bachmann and Adam Cohen. The library implements
-efficient algorithms for approximate string matching and comparison.
+[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) C++ library
+(v3.3.3), developed by Max Bachmann and Adam Cohen. The library
+implements efficient algorithms for approximate string matching and
+comparison.
 
 <center>
 

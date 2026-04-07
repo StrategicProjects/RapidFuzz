@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Introduction to RapidFuzz</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to RapidFuzz</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(RapidFuzz)</span></code></pre></div>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p><code>RapidFuzz</code> provides high-performance string similarity
+and distance functions powered by the C++ library <a href="https://github.com/rapidfuzz/rapidfuzz-cpp">rapidfuzz-cpp</a>. It
+is useful for tasks such as record linkage, fuzzy matching, typo
+correction, and deduplication.</p>
+<p>This vignette demonstrates the main features of the package using
+data readily available in R.</p>
+<hr />
+</div>
+<div id="basic-string-distances" class="section level2">
+<h2>1. Basic String Distances</h2>
+<div id="levenshtein-distance" class="section level3">
+<h3>Levenshtein Distance</h3>
+<p>The Levenshtein distance counts the minimum number of
+single-character edits (insertions, deletions, substitutions) needed to
+transform one string into another.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">levenshtein_distance</span>(<span class="st">&quot;kitten&quot;</span>, <span class="st">&quot;sitting&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">levenshtein_normalized_similarity</span>(<span class="st">&quot;kitten&quot;</span>, <span class="st">&quot;sitting&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.5714286</span></span></code></pre></div>
+</div>
+<div id="comparing-multiple-metrics" class="section level3">
+<h3>Comparing Multiple Metrics</h3>
+<p>Let’s compare how different metrics score the same pair of
+strings:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="st">&quot;California&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="st">&quot;Kalifornia&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">metric =</span> <span class="fu">c</span>(<span class="st">&quot;Levenshtein&quot;</span>, <span class="st">&quot;Damerau-Levenshtein&quot;</span>, <span class="st">&quot;Hamming&quot;</span>, <span class="st">&quot;Jaro&quot;</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>             <span class="st">&quot;Jaro-Winkler&quot;</span>, <span class="st">&quot;LCSseq&quot;</span>, <span class="st">&quot;OSA&quot;</span>, <span class="st">&quot;Indel&quot;</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="at">distance =</span> <span class="fu">c</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="fu">levenshtein_distance</span>(s1, s2),</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="fu">damerau_levenshtein_distance</span>(s1, s2),</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="fu">hamming_distance</span>(s1, s2),</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">jaro_distance</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">jaro_winkler_distance</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>    <span class="fu">lcs_seq_distance</span>(s1, s2),</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>    <span class="fu">osa_distance</span>(s1, s2),</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>    <span class="fu">indel_distance</span>(s1, s2)</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>  ),</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>  <span class="at">normalized_similarity =</span> <span class="fu">c</span>(</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">levenshtein_normalized_similarity</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">damerau_levenshtein_normalized_similarity</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">hamming_normalized_similarity</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">jaro_normalized_similarity</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">jaro_winkler_normalized_similarity</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">lcs_seq_normalized_similarity</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">osa_normalized_similarity</span>(s1, s2), <span class="dv">4</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">indel_normalized_similarity</span>(s1, s2), <span class="dv">4</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>  )</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>)</span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt;                metric distance normalized_similarity</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; 1         Levenshtein   1.0000                0.9000</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; 2 Damerau-Levenshtein   1.0000                0.9000</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; 3             Hamming   1.0000                0.9000</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt; 4                Jaro   0.0667                0.9333</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; 5        Jaro-Winkler   0.0667                0.9333</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt; 6              LCSseq   1.0000                0.9000</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt; 7                 OSA   1.0000                0.9000</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="co">#&gt; 8               Indel   2.0000                0.9000</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="fuzzy-matching-with-fuzz-ratios" class="section level2">
+<h2>2. Fuzzy Matching with Fuzz Ratios</h2>
+<p>The <code>fuzz_*</code> family of functions provides different
+strategies for comparing strings, especially useful when word order or
+partial matches matter.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Exact content, different case/spacing</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">fuzz_ratio</span>(<span class="st">&quot;New York City&quot;</span>, <span class="st">&quot;new york city&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; [1] 76.92308</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co"># Partial match: one string is contained in the other</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="fu">fuzz_partial_ratio</span>(<span class="st">&quot;York&quot;</span>, <span class="st">&quot;New York City&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; [1] 100</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co"># Word order doesn&#39;t matter</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">fuzz_token_sort_ratio</span>(<span class="st">&quot;City of New York&quot;</span>, <span class="st">&quot;New York City&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; [1] 89.65517</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co"># Common tokens</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="fu">fuzz_token_set_ratio</span>(<span class="st">&quot;New York City NY&quot;</span>, <span class="st">&quot;New York City&quot;</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; [1] 100</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co"># Weighted ratio (best overall heuristic)</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="fu">fuzz_WRatio</span>(<span class="st">&quot;New York City&quot;</span>, <span class="st">&quot;new york city!!&quot;</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; [1] 71.42857</span></span></code></pre></div>
+<div id="new-in-v1.1.0-partial-token-ratios" class="section level3">
+<h3>New in v1.1.0: Partial Token Ratios</h3>
+<p>These combine the benefits of token-based comparison with partial
+matching:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">fuzz_partial_token_sort_ratio</span>(<span class="st">&quot;Museum of Modern Art&quot;</span>, <span class="st">&quot;Modern Art Museum NYC&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] 94.73684</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">fuzz_partial_token_set_ratio</span>(<span class="st">&quot;Museum of Modern Art&quot;</span>, <span class="st">&quot;Modern Art Museum NYC&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; [1] 100</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">fuzz_partial_token_ratio</span>(<span class="st">&quot;Museum of Modern Art&quot;</span>, <span class="st">&quot;Modern Art Museum NYC&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; [1] 100</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="matching-against-a-list-of-choices" class="section level2">
+<h2>3. Matching Against a List of Choices</h2>
+<p>A common task is finding the best match for a query within a list of
+options. <code>RapidFuzz</code> provides three extract functions for
+this.</p>
+<div id="using-us-state-names" class="section level3">
+<h3>Using US State Names</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Misspelled state names</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>queries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Kalifornia&quot;</span>, <span class="st">&quot;Nwe York&quot;</span>, <span class="st">&quot;Texs&quot;</span>, <span class="st">&quot;Florda&quot;</span>, <span class="st">&quot;Pensylvania&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>states <span class="ot">&lt;-</span> state.name</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># Find the best match for each misspelled name</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lapply</span>(queries, <span class="cf">function</span>(q) {</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  best <span class="ot">&lt;-</span> <span class="fu">extract_best_match</span>(q, states, <span class="at">score_cutoff =</span> <span class="dv">0</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="at">query =</span> q,</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    <span class="at">best_match =</span> best<span class="sc">$</span>choice,</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>    <span class="at">score =</span> <span class="fu">round</span>(best<span class="sc">$</span>score, <span class="dv">2</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  )</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>})</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="fu">do.call</span>(rbind, results)</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt;         query   best_match score</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; 1  Kalifornia   California 90.00</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; 2    Nwe York     New York 87.50</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; 3        Texs        Texas 88.89</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; 4      Florda      Florida 92.31</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; 5 Pensylvania Pennsylvania 95.65</span></span></code></pre></div>
+</div>
+<div id="extract-top-n-matches" class="section level3">
+<h3>Extract Top-N Matches</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Find top 5 states similar to &quot;New&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">extract_matches</span>(<span class="st">&quot;New&quot;</span>, states, <span class="at">score_cutoff =</span> <span class="dv">50</span>, <span class="at">limit =</span> <span class="dv">5</span>, <span class="at">scorer =</span> <span class="st">&quot;PartialRatio&quot;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt;          choice score</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 1 New Hampshire   100</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 2    New Jersey   100</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 3    New Mexico   100</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 4      New York   100</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 5         Maine    80</span></span></code></pre></div>
+</div>
+<div id="extract-all-matches-above-a-threshold" class="section level3">
+<h3>Extract All Matches Above a Threshold</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># All states with &gt; 70% similarity to &quot;North&quot;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">extract_similar_strings</span>(<span class="st">&quot;North&quot;</span>, states, <span class="at">score_cutoff =</span> <span class="dv">70</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt;           choice score</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; 1 North Carolina    90</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 2   North Dakota    90</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="choosing-the-right-scorer" class="section level2">
+<h2>4. Choosing the Right Scorer</h2>
+<p>The <code>extract_matches()</code> function supports 10 different
+scorers. The best choice depends on your data:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">&quot;san francisco&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>cities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;San Francisco&quot;</span>, <span class="st">&quot;San Fernando&quot;</span>, <span class="st">&quot;Santa Fe&quot;</span>, <span class="st">&quot;San Diego&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>            <span class="st">&quot;Francisco&quot;</span>, <span class="st">&quot;South San Francisco&quot;</span>, <span class="st">&quot;San Fran&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>scorers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Ratio&quot;</span>, <span class="st">&quot;PartialRatio&quot;</span>, <span class="st">&quot;TokenSortRatio&quot;</span>, <span class="st">&quot;TokenSetRatio&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>             <span class="st">&quot;WRatio&quot;</span>, <span class="st">&quot;QRatio&quot;</span>, <span class="st">&quot;PartialTokenSortRatio&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>             <span class="st">&quot;PartialTokenSetRatio&quot;</span>, <span class="st">&quot;PartialTokenRatio&quot;</span>, <span class="st">&quot;TokenRatio&quot;</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lapply</span>(scorers, <span class="cf">function</span>(sc) {</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">extract_matches</span>(query, cities, <span class="at">score_cutoff =</span> <span class="dv">0</span>, <span class="at">limit =</span> <span class="dv">3</span>, <span class="at">scorer =</span> sc)</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">scorer =</span> sc, <span class="at">rank1 =</span> m<span class="sc">$</span>choice[<span class="dv">1</span>], <span class="at">score1 =</span> <span class="fu">round</span>(m<span class="sc">$</span>score[<span class="dv">1</span>], <span class="dv">1</span>))</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>})</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="fu">do.call</span>(rbind, results)</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt;                   scorer         rank1 score1</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; 1                  Ratio San Francisco    100</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt; 2           PartialRatio San Francisco    100</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; 3         TokenSortRatio San Francisco    100</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; 4          TokenSetRatio San Francisco    100</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; 5                 WRatio San Francisco    100</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt; 6                 QRatio San Francisco    100</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt; 7  PartialTokenSortRatio San Francisco    100</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co">#&gt; 8   PartialTokenSetRatio San Francisco    100</span></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="co">#&gt; 9      PartialTokenRatio San Francisco    100</span></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; 10            TokenRatio San Francisco    100</span></span></code></pre></div>
+<hr />
+</div>
+<div id="string-preprocessing" class="section level2">
+<h2>5. String Preprocessing</h2>
+<p>The <code>processString()</code> function helps normalize strings
+before comparison:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Trim + lowercase</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">processString</span>(<span class="st">&quot;  São Paulo  &quot;</span>, <span class="at">processor =</span> <span class="cn">TRUE</span>, <span class="at">asciify =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;são paulo&quot;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># Trim + lowercase + ASCII transliteration</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="fu">processString</span>(<span class="st">&quot;  São Paulo  &quot;</span>, <span class="at">processor =</span> <span class="cn">TRUE</span>, <span class="at">asciify =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;sao paulo&quot;</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># ASCII only</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="fu">processString</span>(<span class="st">&quot;Ñoño&quot;</span>, <span class="at">processor =</span> <span class="cn">FALSE</span>, <span class="at">asciify =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Nono&quot;</span></span></code></pre></div>
+<p>This is especially useful for matching names with accented
+characters:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Without preprocessing</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">fuzz_ratio</span>(<span class="st">&quot;São Paulo&quot;</span>, <span class="st">&quot;sao paulo&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt; [1] 63.15789</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co"># With preprocessing</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="fu">fuzz_ratio</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="fu">processString</span>(<span class="st">&quot;São Paulo&quot;</span>, <span class="at">processor =</span> <span class="cn">TRUE</span>, <span class="at">asciify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="fu">processString</span>(<span class="st">&quot;sao paulo&quot;</span>, <span class="at">processor =</span> <span class="cn">TRUE</span>, <span class="at">asciify =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; [1] 100</span></span></code></pre></div>
+<hr />
+</div>
+<div id="edit-operations" class="section level2">
+<h2>6. Edit Operations</h2>
+<p>Edit operations show exactly what transformations are needed to
+convert one string into another.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Levenshtein edit operations</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>ops <span class="ot">&lt;-</span> <span class="fu">get_editops</span>(<span class="st">&quot;saturday&quot;</span>, <span class="st">&quot;sunday&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>ops</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt;   src_pos dest_pos    type</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; 1       1        1  delete</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; 2       2        1  delete</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; 3       4        2 replace</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Apply the operations</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">editops_apply_str</span>(ops, <span class="st">&quot;saturday&quot;</span>, <span class="st">&quot;sunday&quot;</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;saturday&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># LCSseq edit operations</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">lcs_seq_editops</span>(<span class="st">&quot;kitten&quot;</span>, <span class="st">&quot;sitting&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   operation source_position destination_position</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; 1    insert               0                    0</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; 2    delete               0                    1</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; 3    insert               4                    4</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; 4    delete               4                    5</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; 5    insert               6                    6</span></span></code></pre></div>
+<hr />
+</div>
+<div id="prefix-and-postfix-matching" class="section level2">
+<h2>7. Prefix and Postfix Matching</h2>
+<p>Useful for comparing strings that share beginnings or endings:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Same prefix &quot;inter&quot;</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">prefix_similarity</span>(<span class="st">&quot;international&quot;</span>, <span class="st">&quot;internet&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="fu">prefix_normalized_similarity</span>(<span class="st">&quot;international&quot;</span>, <span class="st">&quot;internet&quot;</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; [1] 0.4615385</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co"># Same postfix &quot;tion&quot;</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="fu">postfix_similarity</span>(<span class="st">&quot;education&quot;</span>, <span class="st">&quot;formation&quot;</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; [1] 5</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="fu">postfix_normalized_similarity</span>(<span class="st">&quot;education&quot;</span>, <span class="st">&quot;formation&quot;</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; [1] 0.5555556</span></span></code></pre></div>
+<hr />
+</div>
+<div id="practical-example-record-linkage" class="section level2">
+<h2>8. Practical Example: Record Linkage</h2>
+<p>A real-world scenario: matching messy data against a clean reference
+list.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># Simulated &quot;dirty&quot; records</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>dirty <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;J. Smith&quot;</span>, <span class="st">&quot;Jane M. Doe&quot;</span>, <span class="st">&quot;Bob Johnson Jr&quot;</span>, </span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>           <span class="st">&quot;Alice Wonderland&quot;</span>, <span class="st">&quot;Charlie Browne&quot;</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co"># Clean reference list</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>clean <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;John Smith&quot;</span>, <span class="st">&quot;Jane Mary Doe&quot;</span>, <span class="st">&quot;Robert Johnson Junior&quot;</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>           <span class="st">&quot;Alice Wonder&quot;</span>, <span class="st">&quot;Charles Brown&quot;</span>, <span class="st">&quot;David Lee&quot;</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co"># Match each dirty record to the best clean record</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>matches <span class="ot">&lt;-</span> <span class="fu">lapply</span>(dirty, <span class="cf">function</span>(d) {</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>  best <span class="ot">&lt;-</span> <span class="fu">extract_best_match</span>(d, clean, <span class="at">score_cutoff =</span> <span class="dv">0</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>    <span class="at">dirty_record =</span> d,</span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>    <span class="at">matched_to =</span> best<span class="sc">$</span>choice,</span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>    <span class="at">confidence =</span> <span class="fu">round</span>(best<span class="sc">$</span>score, <span class="dv">1</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>  )</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a>})</span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a><span class="fu">do.call</span>(rbind, matches)</span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a><span class="co">#&gt;       dirty_record            matched_to confidence</span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a><span class="co">#&gt; 1         J. Smith            John Smith       77.8</span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a><span class="co">#&gt; 2      Jane M. Doe         Jane Mary Doe       83.3</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a><span class="co">#&gt; 3   Bob Johnson Jr Robert Johnson Junior       85.5</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a><span class="co">#&gt; 4 Alice Wonderland          Alice Wonder       85.7</span></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a><span class="co">#&gt; 5   Charlie Browne         Charles Brown       88.9</span></span></code></pre></div>
+<hr />
+</div>
+<div id="performance-comparison-with-base-r" class="section level2">
+<h2>9. Performance Comparison with Base R</h2>
+<p><code>RapidFuzz</code> is implemented in C++ and is significantly
+faster than pure R alternatives for string matching tasks.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Compare performance: RapidFuzz vs base R adist</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">sample</span>(letters, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">collapse =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">sample</span>(letters, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">collapse =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>bench <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">levenshtein_distance</span>(s1, s2)</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>)</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>bench_base <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">adist</span>(s1, s2)</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>)</span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a>  <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;RapidFuzz&quot;</span>, <span class="st">&quot;base::adist&quot;</span>),</span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a>  <span class="at">time_1000_calls =</span> <span class="fu">c</span>(bench[<span class="st">&quot;elapsed&quot;</span>], bench_base[<span class="st">&quot;elapsed&quot;</span>])</span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a>)</span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co">#&gt;        method time_1000_calls</span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co">#&gt; 1   RapidFuzz           0.013</span></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="co">#&gt; 2 base::adist           0.035</span></span></code></pre></div>
+<hr />
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="79%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Recommended Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simple distance/similarity</td>
+<td><code>levenshtein_*</code>, <code>hamming_*</code></td>
+</tr>
+<tr class="even">
+<td>Transpositions matter</td>
+<td><code>damerau_levenshtein_*</code>, <code>osa_*</code></td>
+</tr>
+<tr class="odd">
+<td>Fuzzy matching (general)</td>
+<td><code>fuzz_WRatio</code>, <code>fuzz_QRatio</code></td>
+</tr>
+<tr class="even">
+<td>Partial string matching</td>
+<td><code>fuzz_partial_ratio</code>,
+<code>fuzz_partial_token_*</code></td>
+</tr>
+<tr class="odd">
+<td>Word-order independent</td>
+<td><code>fuzz_token_sort_ratio</code>,
+<code>fuzz_token_set_ratio</code></td>
+</tr>
+<tr class="even">
+<td>Find best match in list</td>
+<td><code>extract_best_match</code>, <code>extract_matches</code></td>
+</tr>
+<tr class="odd">
+<td>Names with accents</td>
+<td><code>processString()</code> + any metric</td>
+</tr>
+<tr class="even">
+<td>Common prefix/suffix</td>
+<td><code>prefix_*</code>, <code>postfix_*</code></td>
+</tr>
+<tr class="odd">
+<td>Edit operations detail</td>
+<td><code>get_editops</code>, <code>lcs_seq_editops</code>,
+<code>osa_editops</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

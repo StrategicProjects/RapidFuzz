@@ -268,8 +268,22 @@ std::string processString(const std::string& input, bool processor = true, bool 
        similarity = static_cast<double>(rapidfuzz::fuzz::ratio(processedQuery, processedChoice));
      } else if (scorer == "PartialRatio") {
        similarity = static_cast<double>(rapidfuzz::fuzz::partial_ratio(processedQuery, processedChoice));
+     } else if (scorer == "TokenSortRatio") {
+       similarity = static_cast<double>(rapidfuzz::fuzz::token_sort_ratio(processedQuery, processedChoice));
+     } else if (scorer == "TokenSetRatio") {
+       similarity = static_cast<double>(rapidfuzz::fuzz::token_set_ratio(processedQuery, processedChoice));
+     } else if (scorer == "TokenRatio") {
+       similarity = static_cast<double>(rapidfuzz::fuzz::token_ratio(processedQuery, processedChoice));
+     } else if (scorer == "QRatio") {
+       similarity = static_cast<double>(rapidfuzz::fuzz::QRatio(processedQuery, processedChoice));
+     } else if (scorer == "PartialTokenSortRatio") {
+       similarity = static_cast<double>(rapidfuzz::fuzz::partial_token_sort_ratio(processedQuery, processedChoice));
+     } else if (scorer == "PartialTokenSetRatio") {
+       similarity = static_cast<double>(rapidfuzz::fuzz::partial_token_set_ratio(processedQuery, processedChoice));
+     } else if (scorer == "PartialTokenRatio") {
+       similarity = static_cast<double>(rapidfuzz::fuzz::partial_token_ratio(processedQuery, processedChoice));
      } else {
-       Rcpp::stop("Invalid scorer specified.");
+       Rcpp::stop("Invalid scorer specified. Valid options: WRatio, Ratio, PartialRatio, TokenSortRatio, TokenSetRatio, TokenRatio, QRatio, PartialTokenSortRatio, PartialTokenSetRatio, PartialTokenRatio.");
      }
 
      if (similarity >= score_cutoff) {

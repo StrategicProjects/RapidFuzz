@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 #include <string>
 #include <limits>
-#include <rapidfuzz/details/common.hpp>
 #include <rapidfuzz/distance/DamerauLevenshtein.hpp>
 
 #ifndef SIZE_MAX

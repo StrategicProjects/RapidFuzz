@@ -274,6 +274,45 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// fuzz_partial_token_sort_ratio
+double fuzz_partial_token_sort_ratio(std::string s1, std::string s2, double score_cutoff);
+RcppExport SEXP _RapidFuzz_fuzz_partial_token_sort_ratio(SEXP s1SEXP, SEXP s2SEXP, SEXP score_cutoffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type s1(s1SEXP);
+    Rcpp::traits::input_parameter< std::string >::type s2(s2SEXP);
+    Rcpp::traits::input_parameter< double >::type score_cutoff(score_cutoffSEXP);
+    rcpp_result_gen = Rcpp::wrap(fuzz_partial_token_sort_ratio(s1, s2, score_cutoff));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fuzz_partial_token_set_ratio
+double fuzz_partial_token_set_ratio(std::string s1, std::string s2, double score_cutoff);
+RcppExport SEXP _RapidFuzz_fuzz_partial_token_set_ratio(SEXP s1SEXP, SEXP s2SEXP, SEXP score_cutoffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type s1(s1SEXP);
+    Rcpp::traits::input_parameter< std::string >::type s2(s2SEXP);
+    Rcpp::traits::input_parameter< double >::type score_cutoff(score_cutoffSEXP);
+    rcpp_result_gen = Rcpp::wrap(fuzz_partial_token_set_ratio(s1, s2, score_cutoff));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fuzz_partial_token_ratio
+double fuzz_partial_token_ratio(std::string s1, std::string s2, double score_cutoff);
+RcppExport SEXP _RapidFuzz_fuzz_partial_token_ratio(SEXP s1SEXP, SEXP s2SEXP, SEXP score_cutoffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type s1(s1SEXP);
+    Rcpp::traits::input_parameter< std::string >::type s2(s2SEXP);
+    Rcpp::traits::input_parameter< double >::type score_cutoff(score_cutoffSEXP);
+    rcpp_result_gen = Rcpp::wrap(fuzz_partial_token_ratio(s1, s2, score_cutoff));
+    return rcpp_result_gen;
+END_RCPP
+}
 // hamming_distance
 size_t hamming_distance(std::string s1, std::string s2, bool pad);
 RcppExport SEXP _RapidFuzz_hamming_distance(SEXP s1SEXP, SEXP s2SEXP, SEXP padSEXP) {
@@ -776,6 +815,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_RapidFuzz_fuzz_token_ratio", (DL_FUNC) &_RapidFuzz_fuzz_token_ratio, 3},
     {"_RapidFuzz_fuzz_WRatio", (DL_FUNC) &_RapidFuzz_fuzz_WRatio, 3},
     {"_RapidFuzz_fuzz_QRatio", (DL_FUNC) &_RapidFuzz_fuzz_QRatio, 3},
+    {"_RapidFuzz_fuzz_partial_token_sort_ratio", (DL_FUNC) &_RapidFuzz_fuzz_partial_token_sort_ratio, 3},
+    {"_RapidFuzz_fuzz_partial_token_set_ratio", (DL_FUNC) &_RapidFuzz_fuzz_partial_token_set_ratio, 3},
+    {"_RapidFuzz_fuzz_partial_token_ratio", (DL_FUNC) &_RapidFuzz_fuzz_partial_token_ratio, 3},
     {"_RapidFuzz_hamming_distance", (DL_FUNC) &_RapidFuzz_hamming_distance, 3},
     {"_RapidFuzz_hamming_similarity", (DL_FUNC) &_RapidFuzz_hamming_similarity, 3},
     {"_RapidFuzz_hamming_normalized_distance", (DL_FUNC) &_RapidFuzz_hamming_normalized_distance, 3},

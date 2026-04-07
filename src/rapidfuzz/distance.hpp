@@ -102,6 +102,12 @@ ReturnType opcodes_apply_impl(const Opcodes& ops, InputIt1 first1, InputIt1 last
 
 } // namespace detail
 
+/**
+ * @defgroup Distance Distance Algorithms
+ * @brief String distance and similarity measurements.
+ * @{
+ */
+
 template <typename CharT, typename InputIt1, typename InputIt2>
 std::basic_string<CharT> editops_apply_str(const Editops& ops, InputIt1 first1, InputIt1 last1,
                                            InputIt2 first2, InputIt2 last2)
@@ -157,5 +163,7 @@ std::vector<CharT> opcodes_apply_vec(const Opcodes& ops, const Sentence1& s1, co
     return detail::opcodes_apply_impl<std::vector<CharT>>(ops, detail::to_begin(s1), detail::to_end(s1),
                                                           detail::to_begin(s2), detail::to_end(s2));
 }
+
+/** @} */
 
 } // namespace rapidfuzz

@@ -1,13 +1,15 @@
 ## R CMD check results
 
-0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+0 errors | 0 warnings | 0 notes
 
-* This is a new release.
+## Changes in this version
 
+- Updated bundled rapidfuzz-cpp from v3.0.x to v3.3.3
+- Added new fuzz functions: fuzz_partial_token_sort_ratio, fuzz_partial_token_set_ratio, fuzz_partial_token_ratio
+- Expanded scorer options in extract_matches()
+- Added cli package for formatted messages
+- Added Marcos Wasilew and Carlos Amorin as authors
 
-#### Comments
+## Reverse dependencies
 
-* Corrected: C++ ->  'C++' in package description
-* Corrected: R ->  'R' in package description
-
-Reference: <https://contributor.r-project.org/cran-cookbook/description_issues.html#formatting-software-names>
+No reverse dependencies.

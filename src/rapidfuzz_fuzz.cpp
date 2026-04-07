@@ -113,3 +113,50 @@ using namespace Rcpp;
  double fuzz_QRatio(std::string s1, std::string s2, double score_cutoff = 0.0) {
    return rapidfuzz::fuzz::QRatio(s1, s2, score_cutoff);
  }
+
+//' @name fuzz_partial_token_sort_ratio
+//' @title Partial Token Sort Ratio Calculation
+//' @description Sorts the words in the strings and calculates the partial ratio between them.
+//' This combines the advantages of token_sort_ratio and partial_ratio.
+//' @param s1 First string.
+//' @param s2 Second string.
+//' @param score_cutoff Optional score cutoff threshold (default: 0.0).
+//' @return A double representing the partial token sort ratio between the two strings.
+//' @examples
+//' fuzz_partial_token_sort_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
+//' @export
+// [[Rcpp::export]]
+ double fuzz_partial_token_sort_ratio(std::string s1, std::string s2, double score_cutoff = 0.0) {
+   return rapidfuzz::fuzz::partial_token_sort_ratio(s1, s2, score_cutoff);
+ }
+
+//' @name fuzz_partial_token_set_ratio
+//' @title Partial Token Set Ratio Calculation
+//' @description Compares the unique and common words in the strings and calculates the partial ratio.
+//' This combines the advantages of token_set_ratio and partial_ratio.
+//' @param s1 First string.
+//' @param s2 Second string.
+//' @param score_cutoff Optional score cutoff threshold (default: 0.0).
+//' @return A double representing the partial token set ratio between the two strings.
+//' @examples
+//' fuzz_partial_token_set_ratio("fuzzy wuzzy was a bear", "fuzzy fuzzy was a bear")
+//' @export
+// [[Rcpp::export]]
+ double fuzz_partial_token_set_ratio(std::string s1, std::string s2, double score_cutoff = 0.0) {
+   return rapidfuzz::fuzz::partial_token_set_ratio(s1, s2, score_cutoff);
+ }
+
+//' @name fuzz_partial_token_ratio
+//' @title Combined Partial Token Ratio
+//' @description Calculates the maximum ratio of partial_token_set_ratio and partial_token_sort_ratio.
+//' @param s1 First string.
+//' @param s2 Second string.
+//' @param score_cutoff Optional score cutoff threshold (default: 0.0).
+//' @return A double representing the combined partial token ratio between the two strings.
+//' @examples
+//' fuzz_partial_token_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
+//' @export
+// [[Rcpp::export]]
+ double fuzz_partial_token_ratio(std::string s1, std::string s2, double score_cutoff = 0.0) {
+   return rapidfuzz::fuzz::partial_token_ratio(s1, s2, score_cutoff);
+ }

@@ -15,6 +15,99 @@ navbar:
       icon: fa-github
       href: https://github.com/StrategicProjects/RapidFuzz
       aria-label: Github
+    articles:
+      text: Articles
+      menu:
+        - text: "Introduction to RapidFuzz"
+          href: articles/introduction.html
+
+
+reference:
+  - title: "String Processing"
+    desc: "Utilities for pre-processing strings"
+    contents:
+    - processString
+
+  - title: "Fuzz Ratios"
+    desc: "Fuzzy string matching ratio functions"
+    contents:
+    - fuzz_ratio
+    - fuzz_partial_ratio
+    - fuzz_token_sort_ratio
+    - fuzz_token_set_ratio
+    - fuzz_token_ratio
+    - fuzz_partial_token_sort_ratio
+    - fuzz_partial_token_set_ratio
+    - fuzz_partial_token_ratio
+    - fuzz_WRatio
+    - fuzz_QRatio
+
+  - title: "Extract & Search"
+    desc: "Functions for extracting best matches from a set of choices"
+    contents:
+    - extract_similar_strings
+    - extract_best_match
+    - extract_matches
+
+  - title: "Levenshtein"
+    desc: "Levenshtein distance and similarity"
+    contents:
+    - starts_with("levenshtein_")
+
+  - title: "Damerau-Levenshtein"
+    desc: "Damerau-Levenshtein distance and similarity"
+    contents:
+    - starts_with("damerau_levenshtein_")
+
+  - title: "Hamming"
+    desc: "Hamming distance and similarity"
+    contents:
+    - starts_with("hamming_")
+
+  - title: "Jaro"
+    desc: "Jaro distance and similarity"
+    contents:
+    - starts_with("jaro_")
+    - -starts_with("jaro_winkler_")
+
+  - title: "Jaro-Winkler"
+    desc: "Jaro-Winkler distance and similarity"
+    contents:
+    - starts_with("jaro_winkler_")
+
+  - title: "Indel"
+    desc: "Insertion/deletion distance and similarity"
+    contents:
+    - starts_with("indel_")
+
+  - title: "LCSseq"
+    desc: "Longest Common Subsequence distance and similarity"
+    contents:
+    - starts_with("lcs_seq_")
+
+  - title: "OSA"
+    desc: "Optimal String Alignment distance and similarity"
+    contents:
+    - starts_with("osa_")
+
+  - title: "Prefix"
+    desc: "Prefix distance and similarity"
+    contents:
+    - starts_with("prefix_")
+
+  - title: "Postfix"
+    desc: "Postfix distance and similarity"
+    contents:
+    - starts_with("postfix_")
+
+  - title: "Edit Operations"
+    desc: "Functions for computing and applying edit operations"
+    contents:
+    - get_editops
+    - editops_apply_str
+    - editops_apply_vec
+    - opcodes_apply_str
+    - opcodes_apply_vec
 
 footer:
   structure:
@@ -27,7 +120,7 @@ footer:
         computational document processing<br>developed at the [Secretaria Executiva
         de Monitoramento Estratégico](https://monitoramento.sepe.pe.gov.br).
       developed_by: |
-        Developed by André Leite and Hugo Medeiros.
+        Developed by André Leite, Hugo Medeiros, Marcos Wasilew, and Carlos Amorin.
 
 development:
   mode: auto

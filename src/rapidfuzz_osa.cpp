@@ -1,10 +1,5 @@
 #include <Rcpp.h>
-#include <rapidfuzz/details/PatternMatchVector.hpp>
-#include <rapidfuzz/details/Range.hpp>
-#include <rapidfuzz/details/distance.hpp>
-#include <rapidfuzz/details/common.hpp>
-#include <rapidfuzz/distance/OSA_impl.hpp>
-#include <rapidfuzz/distance/LCSseq_impl.hpp>
+#include <rapidfuzz/distance.hpp>
 
 #ifndef SIZE_MAX
 #define SIZE_MAX static_cast<size_t>(-1)
@@ -24,8 +19,7 @@ using namespace Rcpp;
 //' @export
 // [[Rcpp::export]]
  double osa_normalized_similarity(std::string s1, std::string s2, double score_cutoff = 0.0) {
-   double score_hint = 1.0;
-   return rapidfuzz::detail::OSA::normalized_similarity(s1, s2, score_cutoff, score_hint);
+   return rapidfuzz::osa_normalized_similarity(s1, s2, score_cutoff);
  }
 
 //' @name osa_editops
@@ -44,9 +38,7 @@ using namespace Rcpp;
 //' @export
 // [[Rcpp::export]]
  DataFrame osa_editops(std::string s1, std::string s2) {
-   auto ops = rapidfuzz::detail::lcs_seq_editops(
-     rapidfuzz::detail::Range(s1), rapidfuzz::detail::Range(s2)
-   );
+   auto ops = rapidfuzz::lcs_seq_editops(s1, s2);
 
    std::vector<std::string> operation_types;
    std::vector<int> source_positions;
@@ -96,8 +88,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
  size_t osa_distance(std::string s1, std::string s2, Rcpp::Nullable<double> score_cutoff = R_NilValue) {
    size_t cutoff_value = score_cutoff.isNull() ? std::numeric_limits<size_t>::max() : Rcpp::as<size_t>(score_cutoff);
-   size_t score_hint = std::numeric_limits<size_t>::max();
-   return rapidfuzz::detail::OSA::distance(s1, s2, cutoff_value, score_hint);
+   return rapidfuzz::osa_distance(s1, s2, cutoff_value);
  }
 
 //' @name osa_similarity
@@ -112,8 +103,7 @@ using namespace Rcpp;
 //' @export
 // [[Rcpp::export]]
  size_t osa_similarity(std::string s1, std::string s2, size_t score_cutoff = 0) {
-   size_t score_hint = 0;
-   return rapidfuzz::detail::OSA::similarity(s1, s2, score_cutoff, score_hint);
+   return rapidfuzz::osa_similarity(s1, s2, score_cutoff);
  }
 
 //' @name osa_normalized_distance
@@ -128,6 +118,5 @@ using namespace Rcpp;
 //' @export
 // [[Rcpp::export]]
  double osa_normalized_distance(std::string s1, std::string s2, double score_cutoff = 1.0) {
-   double score_hint = 1.0;
-   return rapidfuzz::detail::OSA::normalized_distance(s1, s2, score_cutoff, score_hint);
+   return rapidfuzz::osa_normalized_distance(s1, s2, score_cutoff);
  }

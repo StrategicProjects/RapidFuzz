@@ -1,6 +1,5 @@
 #include <Rcpp.h>
 #include <string>
-#include <rapidfuzz/details/common.hpp>
 #include <rapidfuzz/distance/Prefix.hpp>
 
 #ifndef SIZE_MAX

@@ -13,7 +13,8 @@
 #    include <mm_malloc.h>
 #endif
 
-namespace rapidfuzz::detail {
+namespace rapidfuzz {
+namespace detail {
 
 template <typename InputIt1, typename InputIt2, typename InputIt3>
 struct DecomposedSet {
@@ -33,20 +34,12 @@ static inline size_t abs_diff(size_t a, size_t b)
     return a > b ? a - b : b - a;
 }
 
-template<typename TO, typename FROM>
-TO opt_static_cast(const FROM &value)
+template <typename TO, typename FROM>
+TO opt_static_cast(const FROM& value)
 {
-    if constexpr (std::is_same_v<TO, FROM>)
-        return value;
-    else
-        return static_cast<TO>(value);
+    /* calling the cast through this template function somehow avoids useless cast warnings */
+    return static_cast<TO>(value);
 }
-
-/**
- * @defgroup Common Common
- * Common utilities shared among multiple functions
- * @{
- */
 
 static inline double NormSim_to_NormDist(double score_cutoff, double imprecision = 0.00001)
 {
@@ -94,8 +87,7 @@ static inline void rf_aligned_free(void* ptr)
 #endif
 }
 
-/**@}*/
-
-} // namespace rapidfuzz::detail
+} // namespace detail
+} // namespace rapidfuzz
 
 #include <rapidfuzz/details/common_impl.hpp>
