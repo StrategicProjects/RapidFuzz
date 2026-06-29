@@ -7,7 +7,7 @@ Authors@R: c(
             person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre")),
             person("Hugo", "Vaconcelos", email = "hugo.vasconcelos@ufpe.br", role = "aut"),
             person("Marcos", "Wasilew", email = "marcos.wasilew@gmail.com", role = "aut"),
-            person("Carlos", "Amorin", email = "carlos.agaf@ufpe.br", role = "aut"),
+            person("Carlos", "Amorim", email = "carlos.agaf@ufpe.br", role = "aut"),
             person("Diogo", "Bezerra", email = "diogo.bezerra@ufpe.br", role = "aut"),
             person("Max", "Bachmann", role = ("ctb")),
             person("Adam", "Cohen", role = c("ctb")))

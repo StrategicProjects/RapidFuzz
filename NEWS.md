@@ -29,7 +29,7 @@
 
 ## Authors
 
-* Added Marcos Wasilew and Carlos Amorin as package authors.
+* Added Marcos Wasilew and Carlos Amorim as package authors.
 
 ---
 
