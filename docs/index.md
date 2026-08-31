@@ -8,7 +8,7 @@ Badge](https://img.shields.io/badge/devel%20version-1.1.0-blue.svg)
 
 Provides a high-performance interface for calculating string
 similarities and distances, leveraging the efficient C++ library
-[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.3)
+[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.4)
 developed by Max Bachmann and Adam Cohen. This package integrates the
 C++ implementation, allowing R users to access cutting-edge algorithms
 for fuzzy matching and text analysis.
@@ -18,13 +18,7 @@ for fuzzy matching and text analysis.
 You can install directly from CRAN or the development version from
 [GitHub](https://github.com/) with:
 
-``` r
-
-# install.packages("pak")
-pak::pak("StrategicProjects/RapidFuzz")
-
-library(RapidFuzz)
-```
+`# install.packages("pak")`` ``pak``::`[`pak`](https://pak.r-lib.org/reference/pak.html)`(``"StrategicProjects/RapidFuzz"``)`` `` `[`library`](https://rdrr.io/r/base/library.html)`(``RapidFuzz``)`
 
 ## Overview
 
@@ -229,65 +223,23 @@ Repository](https://github.com/rapidfuzz/RapidFuzz).
 
 ### Prefix Functions
 
-``` r
-
-prefix_distance("abcdef", "abcxyz")
-# Output: 3
-
-prefix_normalized_similarity("abcdef", "abcxyz", score_cutoff = 0.0)
-# Output: 0.5
-```
+[`prefix_distance`](https://strategicprojects.github.io/RapidFuzz/reference/prefix_distance.md)`(``"abcdef"``, ``"abcxyz"``)`` ``# Output: 3`` `` `[`prefix_normalized_similarity`](https://strategicprojects.github.io/RapidFuzz/reference/prefix_normalized_similarity.md)`(``"abcdef"``, ``"abcxyz"``, score_cutoff ``=`` ``0.0``)`` ``# Output: 0.5`
 
 ### Postfix Functions
 
-``` r
-
-postfix_distance("abcdef", "xyzdef")
-# Output: 3
-```
+[`postfix_distance`](https://strategicprojects.github.io/RapidFuzz/reference/postfix_distance.md)`(``"abcdef"``, ``"xyzdef"``)`` ``# Output: 3`
 
 ### Damerau-Levenshtein Functions
 
-``` r
-
-damerau_levenshtein_distance("abcdef", "abcfed")
-# Output: 2
-```
+[`damerau_levenshtein_distance`](https://strategicprojects.github.io/RapidFuzz/reference/damerau_levenshtein_distance.md)`(``"abcdef"``, ``"abcfed"``)`` ``# Output: 2`
 
 ### Partial Token Ratios (New in v1.1.0)
 
-``` r
-
-fuzz_partial_token_sort_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
-# Output: 100
-
-fuzz_partial_token_set_ratio("fuzzy wuzzy was a bear", "fuzzy fuzzy was a bear")
-# Output: 100
-
-fuzz_partial_token_ratio("fuzzy wuzzy was a bear", "wuzzy fuzzy was a bear")
-# Output: 100
-```
+[`fuzz_partial_token_sort_ratio`](https://strategicprojects.github.io/RapidFuzz/reference/fuzz_partial_token_sort_ratio.md)`(``"fuzzy wuzzy was a bear"``, ``"wuzzy fuzzy was a bear"``)`` ``# Output: 100`` `` `[`fuzz_partial_token_set_ratio`](https://strategicprojects.github.io/RapidFuzz/reference/fuzz_partial_token_set_ratio.md)`(``"fuzzy wuzzy was a bear"``, ``"fuzzy fuzzy was a bear"``)`` ``# Output: 100`` `` `[`fuzz_partial_token_ratio`](https://strategicprojects.github.io/RapidFuzz/reference/fuzz_partial_token_ratio.md)`(``"fuzzy wuzzy was a bear"``, ``"wuzzy fuzzy was a bear"``)`` ``# Output: 100`
 
 ### Extract Matches
 
-``` r
-
-# Example data
-query <- "new york jets"
-choices <- c("Atlanta Falcons", "New York Jets", "New York Giants", "Dallas Cowboys")
-score_cutoff <- 0.0
-
-# Find the best match
-extract_matches(query, choices, score_cutoff, scorer = "PartialRatio")
-# Output:
-#            choice     score
-# 1   New York Jets 100.00000
-# 2 New York Giants  81.81818
-# 3 Atlanta Falcons  33.33333
-
-# Using new scorers (v1.1.0)
-extract_matches(query, choices, score_cutoff, scorer = "PartialTokenRatio")
-```
+`# Example data`` ``query`` ``<-`` ``"new york jets"`` ``choices`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Atlanta Falcons"``, ``"New York Jets"``, ``"New York Giants"``, ``"Dallas Cowboys"``)`` ``score_cutoff`` ``<-`` ``0.0`` `` ``# Find the best match`` `[`extract_matches`](https://strategicprojects.github.io/RapidFuzz/reference/extract_matches.md)`(``query``, ``choices``, ``score_cutoff``, scorer ``=`` ``"PartialRatio"``)`` ``# Output:`` ``# choice score`` ``# 1 New York Jets 100.00000`` ``# 2 New York Giants 81.81818`` ``# 3 Atlanta Falcons 33.33333`` `` ``# Using new scorers (v1.1.0)`` `[`extract_matches`](https://strategicprojects.github.io/RapidFuzz/reference/extract_matches.md)`(``query``, ``choices``, ``score_cutoff``, scorer ``=`` ``"PartialTokenRatio"``)`
 
 ------------------------------------------------------------------------
 
@@ -295,7 +247,7 @@ extract_matches(query, choices, score_cutoff, scorer = "PartialTokenRatio")
 
 The `RapidFuzz` package is a wrapper of the
 [RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) C++ library
-(v3.3.3), developed by Max Bachmann and Adam Cohen. The library
+(v3.3.4), developed by Max Bachmann and Adam Cohen. The library
 implements efficient algorithms for approximate string matching and
 comparison.
 

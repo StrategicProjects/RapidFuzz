@@ -1,3 +1,11 @@
+# RapidFuzz 1.1.1
+
+## Minor Changes
+
+* Updated the bundled `rapidfuzz-cpp` C++ library from v3.3.3 to **v3.3.4**:
+    - Fixed a potential out-of-bounds access inside `Editops::remove_subsequence`.
+    - Added missing standard library includes.
+
 # RapidFuzz 1.1.0
 
 ## Major Changes

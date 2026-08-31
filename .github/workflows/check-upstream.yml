@@ -1,0 +1,60 @@
+name: Check rapidfuzz-cpp updates
+
+on:
+  schedule:
+    # Toda segunda-feira às 09:00 UTC
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compare bundled version with latest upstream release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          # Versão empacotada: extraída da nota no DESCRIPTION, ex. "source code (v3.3.4)"
+          bundled=$(grep -oE "source code \(v[0-9]+\.[0-9]+\.[0-9]+\)" DESCRIPTION | grep -oE "v[0-9]+\.[0-9]+\.[0-9]+")
+          echo "Bundled version: $bundled"
+
+          # Última release upstream
+          latest=$(gh api repos/rapidfuzz/rapidfuzz-cpp/releases/latest --jq .tag_name)
+          echo "Latest upstream release: $latest"
+
+          if [ "$bundled" = "$latest" ]; then
+            echo "Up to date."
+            exit 0
+          fi
+
+          title="Update bundled rapidfuzz-cpp to $latest (currently $bundled)"
+
+          # Evita duplicata: já existe issue aberta para essa versão?
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "\"$title\" in:title" --json number --jq length)
+          if [ "$existing" -gt 0 ]; then
+            echo "Issue already open for $latest."
+            exit 0
+          fi
+
+          notes=$(gh api repos/rapidfuzz/rapidfuzz-cpp/releases/latest --jq .body)
+          url=$(gh api repos/rapidfuzz/rapidfuzz-cpp/releases/latest --jq .html_url)
+
+          body=$(printf 'A new release of [rapidfuzz-cpp](https://github.com/rapidfuzz/rapidfuzz-cpp) is available.\n\n- Bundled version: **%s**\n- Latest release: **[%s](%s)**\n\n## Upstream release notes\n\n%s\n\n---\n*Issue aberta automaticamente pelo workflow `check-upstream.yml`.*\n' \
+            "$bundled" "$latest" "$url" "$notes")
+
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "$title" \
+            --body "$body" \
+            --label "upstream" \
+          || gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "$title" \
+            --body "$body"

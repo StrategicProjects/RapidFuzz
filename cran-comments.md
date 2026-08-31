@@ -4,11 +4,9 @@
 
 ## Changes in this version
 
-- Updated bundled rapidfuzz-cpp from v3.0.x to v3.3.3
-- Added new fuzz functions: fuzz_partial_token_sort_ratio, fuzz_partial_token_set_ratio, fuzz_partial_token_ratio
-- Expanded scorer options in extract_matches()
-- Added cli package for formatted messages
-- Added Marcos Wasilew and Carlos Amorim as authors
+- Updated bundled rapidfuzz-cpp from v3.3.3 to v3.3.4 (upstream bugfix release):
+  fixes a potential out-of-bounds access inside Editops::remove_subsequence and
+  adds missing standard library includes.
 
 ## Reverse dependencies
 

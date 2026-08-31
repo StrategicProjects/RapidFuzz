@@ -7,3 +7,5 @@
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+^\.github$
+^\.DS_Store$

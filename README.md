@@ -14,7 +14,7 @@ Badge](https://img.shields.io/badge/devel%20version-1.1.0-blue.svg)
 
 Provides a high-performance interface for calculating string
 similarities and distances, leveraging the efficient C++ library
-[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.3)
+[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.4)
 developed by Max Bachmann and Adam Cohen. This package integrates the
 C++ implementation, allowing R users to access cutting-edge algorithms
 for fuzzy matching and text analysis.
@@ -261,7 +261,7 @@ extract_matches(query, choices, score_cutoff, scorer = "PartialTokenRatio")
 
 The `RapidFuzz` package is a wrapper of the
 [RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) C++ library
-(v3.3.3), developed by Max Bachmann and Adam Cohen. The library
+(v3.3.4), developed by Max Bachmann and Adam Cohen. The library
 implements efficient algorithms for approximate string matching and
 comparison.
 

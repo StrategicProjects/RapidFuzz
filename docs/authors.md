@@ -8,7 +8,7 @@
 
 - **Marcos Wasilew**. Author.
 
-- **Carlos Amorin**. Author.
+- **Carlos Amorim**. Author.
 
 - **Diogo Bezerra**. Author.
 
@@ -18,14 +18,12 @@
 
 ## Citation
 
-Leite A, Vaconcelos H, Wasilew M, Amorin C, Bezerra D (2026).
+Leite A, Vaconcelos H, Wasilew M, Amorim C, Bezerra D (2026).
 *RapidFuzz: String Similarity Computation Using 'RapidFuzz'*. R package
-version 1.1.0, <https://github.com/StrategicProjects/RapidFuzz>.
+version 1.1.1, <https://github.com/StrategicProjects/RapidFuzz>.
 
-    @Manual{,
-      title = {RapidFuzz: String Similarity Computation Using 'RapidFuzz'},
-      author = {Andre Leite and Hugo Vaconcelos and Marcos Wasilew and Carlos Amorin and Diogo Bezerra},
-      year = {2026},
-      note = {R package version 1.1.0},
-      url = {https://github.com/StrategicProjects/RapidFuzz},
-    }
+@Manual{, title = {RapidFuzz: String Similarity Computation Using
+'RapidFuzz'}, author = {Andre Leite and Hugo Vaconcelos and Marcos
+Wasilew and Carlos Amorim and Diogo Bezerra}, year = {2026}, note = {R
+package version 1.1.1}, url =
+{https://github.com/StrategicProjects/RapidFuzz}, }

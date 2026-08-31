@@ -7,6 +7,6 @@ NULL
   packageStartupMessage(
     cli::col_blue(cli::style_bold("RapidFuzz")),
     " v", utils::packageVersion("RapidFuzz"),
-    " - High-performance string matching powered by rapidfuzz-cpp v3.3.3"
+    " - High-performance string matching powered by rapidfuzz-cpp v3.3.4"
   )
 }

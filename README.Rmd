@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient C++ library [RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.3) developed by Max Bachmann and Adam Cohen. This package integrates the C++ implementation, allowing R users to access cutting-edge algorithms for fuzzy matching and text analysis.
+Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient C++ library [RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.4) developed by Max Bachmann and Adam Cohen. This package integrates the C++ implementation, allowing R users to access cutting-edge algorithms for fuzzy matching and text analysis.
 
 ## Installation
 
@@ -229,7 +229,7 @@ extract_matches(query, choices, score_cutoff, scorer = "PartialTokenRatio")
 
 ### Original Library
 
-The `RapidFuzz` package is a wrapper of the [RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) C++ library (v3.3.3), developed by Max Bachmann and Adam Cohen. The library implements efficient algorithms for approximate string matching and comparison.
+The `RapidFuzz` package is a wrapper of the [RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) C++ library (v3.3.4), developed by Max Bachmann and Adam Cohen. The library implements efficient algorithms for approximate string matching and comparison.
 
 <center>
 [![](https://rapidfuzz.github.io/RapidFuzz/_images/RapidFuzz.svg)](https://rapidfuzz.github.io/RapidFuzz/)]

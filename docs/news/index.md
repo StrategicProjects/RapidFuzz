@@ -1,6 +1,18 @@
 # Changelog
 
+## RapidFuzz 1.1.1
+
+### Minor Changes
+
+- Updated the bundled `rapidfuzz-cpp` C++ library from v3.3.3 to
+  **v3.3.4**:
+  - Fixed a potential out-of-bounds access inside
+    `Editops::remove_subsequence`.
+  - Added missing standard library includes.
+
 ## RapidFuzz 1.1.0
+
+CRAN release: 2026-04-07
 
 ### Major Changes
 
@@ -41,7 +53,7 @@
 
 ### Authors
 
-- Added Marcos Wasilew and Carlos Amorin as package authors.
+- Added Marcos Wasilew and Carlos Amorim as package authors.
 
 ------------------------------------------------------------------------
 
