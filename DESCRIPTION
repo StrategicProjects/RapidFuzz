@@ -5,10 +5,13 @@ Version: 1.1.1
 Date: 2026-08-31
 Authors@R: c(
             person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre")),
-            person("Hugo", "Vaconcelos", email = "hugo.vasconcelos@ufpe.br", role = "aut"),
-            person("Marcos", "Wasilew", email = "marcos.wasilew@gmail.com", role = "aut"),
+            person("Hugo", "Vasconcelos", email = "hugo.vasconcelos@ufpe.br", role = "aut"),
+            person("Marcos", "Wasiliew", email = "marcos.wasiliew@gmail.com", role = "aut",
+                   comment = c(ORCID = "0009-0004-4694-3159")),
             person("Carlos", "Amorim", email = "carlos.agaf@ufpe.br", role = "aut"),
             person("Diogo", "Bezerra", email = "diogo.bezerra@ufpe.br", role = "aut"),
+            person("Júlia", "Nascimento Barreto", email = "juliabarreto@gd.seplag.pe.gov.br", role = "aut",
+                   comment = c(ORCID = "0009-0004-2851-7770")),
             person("Max", "Bachmann", role = ("ctb")),
             person("Adam", "Cohen", role = c("ctb")))
 Description: Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient library 'RapidFuzz' <https://github.com/rapidfuzz/rapidfuzz-cpp>. This package integrates the 'C++' implementation, allowing 'R' users to access cutting-edge algorithms for fuzzy matching and text analysis. Supported metrics include Levenshtein, Damerau-Levenshtein, Hamming, Jaro, Jaro-Winkler, Longest Common Subsequence (LCS), Optimal String Alignment (OSA), Indel, Prefix, and Postfix distances and similarities, as well as multiple fuzzy matching ratios.
@@ -19,7 +22,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: Rcpp (>= 1.0.13), cli
 LinkingTo: Rcpp
-RoxygenNote: 7.3.3
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 SystemRequirements: C++17
+Config/roxygen2/version: 8.0.0

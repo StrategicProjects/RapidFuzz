@@ -37,7 +37,7 @@
 
 ## Authors
 
-* Added Marcos Wasilew and Carlos Amorim as package authors.
+* Added Marcos Wasiliew and Carlos Amorim as package authors.
 
 ---
 
