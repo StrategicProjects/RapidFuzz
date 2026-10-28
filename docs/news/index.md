@@ -2,6 +2,8 @@
 
 ## RapidFuzz 1.1.1
 
+CRAN release: 2026-08-31
+
 ### Minor Changes
 
 - Updated the bundled `rapidfuzz-cpp` C++ library from v3.3.3 to
@@ -53,7 +55,7 @@ CRAN release: 2026-04-07
 
 ### Authors
 
-- Added Marcos Wasilew and Carlos Amorim as package authors.
+- Added Marcos Wasiliew and Carlos Amorim as package authors.
 
 ------------------------------------------------------------------------
 

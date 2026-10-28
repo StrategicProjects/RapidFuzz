@@ -2,15 +2,20 @@
 
 ## Authors
 
-- **Andre Leite**. Author, maintainer.
+- **André Leite**. Author, maintainer.
+  [](https://orcid.org/0000-0002-4718-9766)
 
-- **Hugo Vaconcelos**. Author.
+- **Hugo Vasconcelos**. Author.
+  [](https://orcid.org/0000-0001-6249-0920)
 
-- **Marcos Wasilew**. Author.
+- **Marcos Wasiliew**. Author. [](https://orcid.org/0009-0004-4694-3159)
 
-- **Carlos Amorim**. Author.
+- **Carlos Amorim**. Author. [](https://orcid.org/0000-0001-6315-8305)
 
-- **Diogo Bezerra**. Author.
+- **Diogo Bezerra**. Author. [](https://orcid.org/0000-0002-1216-8674)
+
+- **Júlia Nascimento Barreto**. Author.
+  [](https://orcid.org/0009-0004-2851-7770)
 
 - **Max Bachmann**. Contributor.
 
@@ -18,12 +23,15 @@
 
 ## Citation
 
-Leite A, Vaconcelos H, Wasilew M, Amorim C, Bezerra D (2026).
-*RapidFuzz: String Similarity Computation Using 'RapidFuzz'*. R package
-version 1.1.1, <https://github.com/StrategicProjects/RapidFuzz>.
+Leite A, Vasconcelos H, Wasiliew M, Amorim C, Bezerra D, Nascimento
+Barreto J (2026). *RapidFuzz: String Similarity Computation Using
+'RapidFuzz'*. R package version 1.1.1,
+<https://github.com/StrategicProjects/RapidFuzz>.
 
-@Manual{, title = {RapidFuzz: String Similarity Computation Using
-'RapidFuzz'}, author = {Andre Leite and Hugo Vaconcelos and Marcos
-Wasilew and Carlos Amorim and Diogo Bezerra}, year = {2026}, note = {R
-package version 1.1.1}, url =
-{https://github.com/StrategicProjects/RapidFuzz}, }
+@Manual{,\
+  title = {RapidFuzz: String Similarity Computation Using 'RapidFuzz'},\
+  author = {André Leite and Hugo Vasconcelos and Marcos Wasiliew and Carlos Amorim and Diogo Bezerra and Júlia {Nascimento Barreto}},\
+  year = {2026},\
+  note = {R package version 1.1.1},\
+  url = {https://github.com/StrategicProjects/RapidFuzz},\
+}

@@ -1,3 +1,4 @@
 # License
 
-YEAR: 2024 COPYRIGHT HOLDER: RapidFuzz authors
+YEAR: 2024\
+COPYRIGHT HOLDER: RapidFuzz authors\
