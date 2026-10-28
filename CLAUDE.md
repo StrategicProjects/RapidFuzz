@@ -33,9 +33,13 @@ Passos da atualização (feitos assim na 3.3.3 → 3.3.4, 2026-08-31):
 - No check local, o NOTE "HTML Tidy antigo" é do ambiente (macOS), não aparece no CRAN.
 - Não commitar `.DS_Store` (há alguns já modificados no working tree — deixar de fora).
 - Commits de release ganham `CRAN-SUBMISSION` atualizado pelo devtools — commitar junto.
+- **`pkgdown::build_site()` publica o CLAUDE.md**: o `package_mds()` do pkgdown (≤2.2.0)
+  renderiza todo `.md` da raiz exceto uma lista fixa e ignora o `.Rbuildignore`. Após o
+  build, remover `docs/CLAUDE.{md,html}` e tirar as entradas de `docs/sitemap.xml` e
+  `docs/search.json` antes do push (aconteceu em 2026-10-27; ficou ~min no ar).
 
-## Estado (2026-08-31)
+## Estado (2026-10-27)
 
-v1.1.1 (rapidfuzz-cpp v3.3.4) submetida ao CRAN em 2026-08-31, aguardando aceitação.
-Badges de CRAN status/downloads atualizam sozinhos após aceite; depois do aceite, rodar
-`pkgdown::build_news()` para o site mostrar a data de release.
+v1.1.1 (rapidfuzz-cpp v3.3.4) aceita no CRAN, publicada em 2026-08-31 — 13 plataformas,
+todas OK. Site pkgdown reconstruído em 2026-10-27 (data da release no news + ORCIDs).
+Upstream continua na v3.3.4; nada a atualizar.
