@@ -42,4 +42,5 @@ Passos da atualização (feitos assim na 3.3.3 → 3.3.4, 2026-08-31):
 
 v1.1.1 (rapidfuzz-cpp v3.3.4) aceita no CRAN, publicada em 2026-08-31 — 13 plataformas,
 todas OK. Site pkgdown reconstruído em 2026-10-27 (data da release no news + ORCIDs).
-Upstream continua na v3.3.4; nada a atualizar.
+Upstream continua na v3.3.4; nada a atualizar. **Nenhuma pendência em aberto** — retomar
+quando o workflow check-upstream abrir issue de release nova, ou surgir bug/feature.
