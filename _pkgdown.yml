@@ -111,9 +111,13 @@ reference:
 
 footer:
   structure:
-    left: [rmd]
+    left: [rmd, lineage]
     right: [developed_by]
   components:
+      lineage: >
+        R bindings to [rapidfuzz-cpp](https://github.com/rapidfuzz/rapidfuzz-cpp)
+        by Max Bachmann (MIT), bundled with the package; an independent
+        binding, not affiliated with or endorsed by the RapidFuzz project.
       #p: "\n\n"
       rmd: |
         **RapidFuzz** is part of an ecosystem of R packages for data analysis and

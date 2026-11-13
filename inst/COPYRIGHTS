@@ -1,0 +1,56 @@
+The RapidFuzz R package is a binding to rapidfuzz-cpp
+=====================================================
+
+The RapidFuzz R package provides R bindings to rapidfuzz-cpp
+(https://github.com/rapidfuzz/rapidfuzz-cpp), the C++ library of the RapidFuzz
+project (https://github.com/rapidfuzz), created and maintained by Max
+Bachmann. The package takes its name from that project. The string matching
+algorithms and their implementation are Max Bachmann's work; the fuzz scorers
+derive from FuzzyWuzzy, by Adam Cohen.
+
+The R package is an independent binding. It is not affiliated with, maintained
+by or endorsed by the RapidFuzz project or its authors.
+
+-------------------------------------------------------------------------------
+rapidfuzz-cpp (bundled in src/rapidfuzz/, version 3.3.4)
+-------------------------------------------------------------------------------
+
+The header files under src/rapidfuzz/ are copied from rapidfuzz-cpp. Each
+carries an "SPDX-License-Identifier: MIT" tag and a "Copyright (c) Max
+Bachmann" line (years 2020 to present); src/rapidfuzz/fuzz.hpp and
+src/rapidfuzz/fuzz_impl.hpp additionally carry "Copyright (c) 2011 Adam
+Cohen". rapidfuzz-cpp is distributed under the MIT license. Its LICENSE file,
+with its copyright notices and permission notice, is reproduced below, as that
+license requires.
+
+Copyright © 2020 Max Bachmann
+Copyright © 2011 Adam Cohen
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+-------------------------------------------------------------------------------
+R package
+-------------------------------------------------------------------------------
+
+The R code, the Rcpp binding layer (src/*.cpp) and the documentation are
+
+  Copyright (c) 2024 RapidFuzz (R package) authors
+
+and released under the MIT license (see the LICENSE file).

@@ -12,12 +12,21 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RapidFuzz)  
 Badge](https://img.shields.io/badge/devel%20version-1.1.1-blue.svg)
 <!-- badges: end -->
 
-Provides a high-performance interface for calculating string
-similarities and distances, leveraging the efficient C++ library
-[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) (v3.3.4)
-developed by Max Bachmann and Adam Cohen. This package integrates the
-C++ implementation, allowing R users to access cutting-edge algorithms
-for fuzzy matching and text analysis.
+The **RapidFuzz** R package provides **R bindings to
+[rapidfuzz-cpp](https://github.com/rapidfuzz/rapidfuzz-cpp)**, the C++
+string matching library of the [RapidFuzz](https://github.com/rapidfuzz)
+project, created by Max Bachmann (parts of the `fuzz` module derive from
+FuzzyWuzzy, © 2011 Adam Cohen). The rapidfuzz-cpp headers (v3.3.4, MIT)
+are bundled with the package: the algorithms and their implementation
+are the upstream authors’ work, and this package gives R users a
+high-performance interface to them for calculating string similarities
+and distances.
+
+> This R package is an independent binding: it is not affiliated with,
+> maintained by or endorsed by the RapidFuzz project. Please report
+> problems with the R binding
+> [here](https://github.com/StrategicProjects/RapidFuzz/issues), not
+> upstream.
 
 ## Installation
 
@@ -260,12 +269,14 @@ extract_matches(query, choices, score_cutoff, scorer = "PartialTokenRatio")
 ### Original Library
 
 The `RapidFuzz` package is a wrapper of the
-[RapidFuzz](https://github.com/rapidfuzz/rapidfuzz-cpp) C++ library
-(v3.3.4), developed by Max Bachmann and Adam Cohen. The library
-implements efficient algorithms for approximate string matching and
-comparison.
+[rapidfuzz-cpp](https://github.com/rapidfuzz/rapidfuzz-cpp) C++ library
+(v3.3.4) of the [RapidFuzz](https://github.com/rapidfuzz) project,
+developed by Max Bachmann; the `fuzz` scorers derive from FuzzyWuzzy, by
+Adam Cohen. The library implements efficient algorithms for approximate
+string matching and comparison.
 
-<center>
-
-[![](https://rapidfuzz.github.io/RapidFuzz/_images/RapidFuzz.svg)](https://rapidfuzz.github.io/RapidFuzz/)\]
-</center>
+rapidfuzz-cpp is © Max Bachmann and © 2011 Adam Cohen, distributed under
+the MIT license; its license notice ships with the package in
+[`inst/COPYRIGHTS`](inst/COPYRIGHTS). The name “RapidFuzz” is that of
+the upstream project. This R package is not affiliated with or endorsed
+by it.
