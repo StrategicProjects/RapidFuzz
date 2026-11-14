@@ -349,7 +349,7 @@ R alternatives for string matching tasks.
 `)`\
 `#>        method time_1000_calls`\
 `#> 1   RapidFuzz           0.003`\
-`#> 2 base::adist           0.038`
+`#> 2 base::adist           0.037`
 
 ------------------------------------------------------------------------
 

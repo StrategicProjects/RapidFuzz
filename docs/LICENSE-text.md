@@ -1,4 +1,4 @@
 # License
 
 YEAR: 2024\
-COPYRIGHT HOLDER: RapidFuzz authors\
+COPYRIGHT HOLDER: RapidFuzz (R package) authors\

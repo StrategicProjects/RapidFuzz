@@ -17,9 +17,12 @@
 - **Júlia Nascimento Barreto**. Author.
   [](https://orcid.org/0009-0004-2851-7770)
 
-- **Max Bachmann**. Contributor.
+- **Max Bachmann**. Contributor, copyright holder.\
+  Author of the bundled rapidfuzz-cpp library
 
-- **Adam Cohen**. Contributor.
+- **Adam Cohen**. Contributor, copyright holder.\
+  Copyright holder of parts of the bundled rapidfuzz-cpp files fuzz.hpp
+  and fuzz_impl.hpp
 
 ## Citation
 

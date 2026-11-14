@@ -1,5 +1,17 @@
 # Changelog
 
+## RapidFuzz (development version)
+
+- **Credit.** The package is an R binding to
+  [rapidfuzz-cpp](https://github.com/rapidfuzz/rapidfuzz-cpp) by Max
+  Bachmann, whose headers it bundles. Max Bachmann and Adam Cohen are
+  now listed as copyright holders (`cph`) in `Authors@R`; the
+  rapidfuzz-cpp MIT license notice ships in `inst/COPYRIGHTS`; the
+  `LICENSE` copyright holder now reads “RapidFuzz (R package) authors”;
+  and the description, README and website state the lineage and that the
+  package is not affiliated with or endorsed by the RapidFuzz project.
+  The README no longer embeds the upstream project’s logo.
+
 ## RapidFuzz 1.1.1
 
 CRAN release: 2026-08-31

@@ -16,8 +16,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="String Similarity Computation Using RapidFuzz">
-<meta name="description" content="Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient library RapidFuzz &lt;https://github.com/rapidfuzz/rapidfuzz-cpp&gt;. This package integrates the C++ implementation, allowing R users to access cutting-edge algorithms for fuzzy matching and text analysis. Supported metrics include Levenshtein, Damerau-Levenshtein, Hamming, Jaro, Jaro-Winkler, Longest Common Subsequence (LCS), Optimal String Alignment (OSA), Indel, Prefix, and Postfix distances and similarities, as well as multiple fuzzy matching ratios.">
-<meta property="og:description" content="Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient library RapidFuzz &lt;https://github.com/rapidfuzz/rapidfuzz-cpp&gt;. This package integrates the C++ implementation, allowing R users to access cutting-edge algorithms for fuzzy matching and text analysis. Supported metrics include Levenshtein, Damerau-Levenshtein, Hamming, Jaro, Jaro-Winkler, Longest Common Subsequence (LCS), Optimal String Alignment (OSA), Indel, Prefix, and Postfix distances and similarities, as well as multiple fuzzy matching ratios.">
+<meta name="description" content="R bindings to rapidfuzz-cpp, the C++ string matching library of the RapidFuzz project by Max Bachmann &lt;https://github.com/rapidfuzz/rapidfuzz-cpp&gt;, whose headers are bundled with the package. Provides a high-performance interface for calculating string similarities and distances, giving R users access to its algorithms for fuzzy matching and text analysis. Supported metrics include Levenshtein, Damerau-Levenshtein, Hamming, Jaro, Jaro-Winkler, Longest Common Subsequence (LCS), Optimal String Alignment (OSA), Indel, Prefix, and Postfix distances and similarities, as well as multiple fuzzy matching ratios. This is an independent binding, not affiliated with or endorsed by the RapidFuzz project.">
+<meta property="og:description" content="R bindings to rapidfuzz-cpp, the C++ string matching library of the RapidFuzz project by Max Bachmann &lt;https://github.com/rapidfuzz/rapidfuzz-cpp&gt;, whose headers are bundled with the package. Provides a high-performance interface for calculating string similarities and distances, giving R users access to its algorithms for fuzzy matching and text analysis. Supported metrics include Levenshtein, Damerau-Levenshtein, Hamming, Jaro, Jaro-Winkler, Longest Common Subsequence (LCS), Optimal String Alignment (OSA), Indel, Prefix, and Postfix distances and similarities, as well as multiple fuzzy matching ratios. This is an independent binding, not affiliated with or endorsed by the RapidFuzz project.">
 <meta property="og:image" content="https://strategicprojects.github.io/RapidFuzz/logo.png">
 <!-- See https://stackoverflow.com/questions/1865837/whats-the-difference-between-window-location-and-window-location-replace — we use .replace() because we don't want the old url to appear in the browser history. --><script>
   if (!/(\/|html?)$/.test(window.location.href)){
@@ -71,7 +71,10 @@
 </div>
 <!-- badges: start -->
 <p><img src="https://www.r-pkg.org/badges/version/RapidFuzz" alt="CRAN_Status_Badge">   <img src="https://cranlogs.r-pkg.org/badges/grand-total/RapidFuzz" alt="CRAN Downloads">   <img src="https://img.shields.io/badge/devel%20version-1.1.1-blue.svg" alt="Devel Badge"><!-- badges: end --></p>
-<p>Provides a high-performance interface for calculating string similarities and distances, leveraging the efficient C++ library <a href="https://github.com/rapidfuzz/rapidfuzz-cpp" class="external-link">RapidFuzz</a> (v3.3.4) developed by Max Bachmann and Adam Cohen. This package integrates the C++ implementation, allowing R users to access cutting-edge algorithms for fuzzy matching and text analysis.</p>
+<p>The <strong>RapidFuzz</strong> R package provides <strong>R bindings to <a href="https://github.com/rapidfuzz/rapidfuzz-cpp" class="external-link">rapidfuzz-cpp</a></strong>, the C++ string matching library of the <a href="https://github.com/rapidfuzz" class="external-link">RapidFuzz</a> project, created by Max Bachmann (parts of the <code>fuzz</code> module derive from FuzzyWuzzy, © 2011 Adam Cohen). The rapidfuzz-cpp headers (v3.3.4, MIT) are bundled with the package: the algorithms and their implementation are the upstream authors’ work, and this package gives R users a high-performance interface to them for calculating string similarities and distances.</p>
+<blockquote>
+<p>This R package is an independent binding: it is not affiliated with, maintained by or endorsed by the RapidFuzz project. Please report problems with the R binding <a href="https://github.com/StrategicProjects/RapidFuzz/issues" class="external-link">here</a>, not upstream.</p>
+</blockquote>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -380,10 +383,8 @@
 <div class="section level3">
 <h3 id="original-library">Original Library<a class="anchor" aria-label="anchor" href="#original-library"></a>
 </h3>
-<p>The <code>RapidFuzz</code> package is a wrapper of the <a href="https://github.com/rapidfuzz/rapidfuzz-cpp" class="external-link">RapidFuzz</a> C++ library (v3.3.4), developed by Max Bachmann and Adam Cohen. The library implements efficient algorithms for approximate string matching and comparison.</p>
-<center>
-<a href="https://rapidfuzz.github.io/RapidFuzz/" class="external-link"><img src="https://rapidfuzz.github.io/RapidFuzz/_images/RapidFuzz.svg"></a>]
-</center>
+<p>The <code>RapidFuzz</code> package is a wrapper of the <a href="https://github.com/rapidfuzz/rapidfuzz-cpp" class="external-link">rapidfuzz-cpp</a> C++ library (v3.3.4) of the <a href="https://github.com/rapidfuzz" class="external-link">RapidFuzz</a> project, developed by Max Bachmann; the <code>fuzz</code> scorers derive from FuzzyWuzzy, by Adam Cohen. The library implements efficient algorithms for approximate string matching and comparison.</p>
+<p>rapidfuzz-cpp is © Max Bachmann and © 2011 Adam Cohen, distributed under the MIT license; its license notice ships with the package in <a href="inst/COPYRIGHTS"><code>inst/COPYRIGHTS</code></a>. The name “RapidFuzz” is that of the upstream project. This R package is not affiliated with or endorsed by it.</p>
 </div>
 </div>
 </div>
@@ -432,7 +433,7 @@
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p><strong>RapidFuzz</strong> is part of an ecosystem of R packages for data analysis and computational document processing<br>developed at the <a href="https://monitoramento.sepe.pe.gov.br" class="external-link">Secretaria Executiva de Monitoramento Estratégico</a>.</p>
+  <p><strong>RapidFuzz</strong> is part of an ecosystem of R packages for data analysis and computational document processing<br>developed at the <a href="https://monitoramento.sepe.pe.gov.br" class="external-link">Secretaria Executiva de Monitoramento Estratégico</a>. R bindings to <a href="https://github.com/rapidfuzz/rapidfuzz-cpp" class="external-link">rapidfuzz-cpp</a> by Max Bachmann (MIT), bundled with the package; an independent binding, not affiliated with or endorsed by the RapidFuzz project.</p>
 </div>
 
 <div class="pkgdown-footer-right">
